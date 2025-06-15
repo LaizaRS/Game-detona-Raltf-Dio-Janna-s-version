@@ -3,7 +3,8 @@ const state = {
     squares: document.querySelectorAll(".square"),
     enemy: document.querySelector(".enemy"),
     timeLeft: document.querySelector("#time-left"),
-    score: document.querySelector("#score")
+    score: document.querySelector("#score"),
+    screenLives: document.querySelector(".number-lives")
   },
 
   values: {
@@ -11,6 +12,7 @@ const state = {
     hitPosition: 0,
     result: 0,
     currentTime: 60,
+    lives: 3
   },
 
   actions: {
@@ -28,6 +30,7 @@ function countDown() {
     clearInterval(state.actions.timerId)
     alert("Game Over! O seu resultado foi:" + state.values.result);
     // playSound("gameOver")
+    location.reload();
   }
 }
 
@@ -56,6 +59,15 @@ function addListnerHitBox() {
         state.view.score.textContent = state.values.result;
         state.values.hitPosition = null;
         playSound("hit")
+      } else {
+        if (state.values.lives > 0) {
+          state.values.lives--
+          state.view.screenLives.textContent = state.values.lives;
+        } else {
+          alert("Game Over! O seu resultado foi:" + state.values.result);
+          location.reload();
+
+        }
       }
     })
   })
